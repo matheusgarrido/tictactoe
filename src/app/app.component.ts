@@ -30,7 +30,7 @@ export class AppComponent {
   countCurrentPlay: number = 0;
   values: string[] = ['', '', '', '', '', '', '', '', ''];
   winPosition: number[] = [];
-
+  messageStatus: string = 'Current turn: ' + this.playerNick[0];
   changeGameType(event: any) {
     const value = parseInt(event.target.value);
     this.currentPlayerTurn = 0;
@@ -48,8 +48,11 @@ export class AppComponent {
       this.countCurrentPlay++;
       if (this.countCurrentPlay === 9) {
         this.msgButtonStart = 'NEW GAME';
+        this.messageStatus = 'Tie';
       } else {
         this.msgButtonStart = 'RESET';
+        this.messageStatus =
+          'Current turn: ' + this.playerNick[this.currentPlayerTurn];
       }
       victoryPositions.map((element) => {
         const [pos1, pos2, pos3] = element;
@@ -76,14 +79,17 @@ export class AppComponent {
 
   setVictory() {
     this.msgButtonStart = 'NEW GAME';
-    this.playerCountWins[this.currentPlayerTurn ? 0 : 1]++;
     this.currentPlayerTurn = this.currentPlayerTurn ? 0 : 1;
+    this.playerCountWins[this.currentPlayerTurn]++;
+    this.messageStatus = 'Winner: ' + this.playerNick[this.currentPlayerTurn];
   }
 
   reset() {
     this.values.forEach((element, index) => {
       this.values[index] = '';
     });
+    this.messageStatus =
+      'Current turn: ' + this.playerNick[this.currentPlayerTurn];
     this.countCurrentPlay = 0;
     this.winPosition = [];
   }

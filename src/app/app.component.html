@@ -49,8 +49,7 @@
     </div>
     <div>
       <p>
-        {{ winPosition.length ? "Winner: " : "Current Turn:" }}
-        {{ playerNick[currentPlayerTurn] }}
+        {{ messageStatus }}
       </p>
     </div>
     <button (click)="newGame()" [disabled]="!countCurrentPlay">
