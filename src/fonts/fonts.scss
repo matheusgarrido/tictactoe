@@ -1,0 +1,17 @@
+@mixin CocogooseProRegular {
+  @font-face {
+    font-family: CocogooseProRegular;
+    src: url("../fonts/cocogoose-pro.regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+  }
+}
+
+@mixin CocogooseProBlock {
+  @font-face {
+    font-family: CocogooseProBlock;
+    src: url("./cocogoose-pro.block-gradient.ttf");
+    font-weight: normal;
+    font-style: normal;
+  }
+}

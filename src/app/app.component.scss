@@ -1,0 +1,97 @@
+@import "../fonts/fonts.scss";
+@import "../styles/colors.scss";
+
+@include CocogooseProBlock;
+@include CocogooseProRegular;
+
+main {
+  display: grid;
+  height: 100vh;
+  font-family: "CocogooseProRegular", sans-serif;
+}
+
+h1 {
+  font-size: 2em;
+  text-align: center;
+  font-family: "CocogooseProBlock", "CocogooseProRegular", sans-serif;
+  margin-bottom: 0;
+}
+
+form {
+  width: max-content;
+  margin: 0 auto 5px;
+  & > label {
+    margin: 0 15px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+main > div > div {
+  width: max-content;
+  margin: 10px auto;
+  p {
+    font-family: "Arial";
+    display: inline;
+    margin: 0 20px;
+  }
+}
+
+button {
+  display: block;
+  margin: 10px auto;
+  font-family: "CocogooseProRegular", sans-serif;
+  &:hover {
+    cursor: pointer;
+  }
+  &:active {
+    background-color: $sucessColor;
+  }
+}
+
+#game {
+  width: 50vw;
+  max-width: 250px;
+  margin: auto;
+  border: 4px black double;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: 80px 80px 80px;
+  justify-items: center;
+  align-items: center;
+  background-color: $bgScreen;
+  font-family: "CocogooseProRegular", sans-serif;
+}
+
+#game > div {
+  background-color: gray;
+  height: 55px;
+  width: 55px;
+  font-size: 100%;
+  border: 1px solid black;
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  margin: 20px 0;
+  border-radius: 50px;
+  text-align: center;
+  font-size: 42px;
+}
+
+#game > div:hover {
+  cursor: pointer;
+}
+#game > div.cross {
+  background-color: $firstPlayer;
+  color: white;
+}
+#game > div.circle {
+  background-color: $secondPlayer;
+  color: white;
+}
+#game > div.winner {
+  background-color: $sucessColor;
+  color: black;
+}
