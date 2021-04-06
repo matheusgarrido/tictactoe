@@ -1,6 +1,6 @@
-<main>
+<div id="grid">
   <div></div>
-  <div>
+  <main>
     <h1>Tic Tac Toe</h1>
     <form (change)="changeGameType($event)">
       <label><input type="radio" name="typeGame" value="1" />PvC</label>
@@ -55,6 +55,8 @@
     <button (click)="newGame()" [disabled]="!countCurrentPlay">
       {{ msgButtonStart }}
     </button>
-  </div>
-  <div></div>
-</main>
+  </main>
+  <footer>
+    <p>Developed by Matheus Garrido &copy; {{ date }}</p>
+  </footer>
+</div>

@@ -13,6 +13,7 @@ const victoryPositions: number[][] = [
   [0, 4, 8],
   [2, 4, 6],
 ];
+const currentYear = new Date().getFullYear();
 
 @Component({
   selector: 'app-root',
@@ -31,6 +32,8 @@ export class AppComponent {
   values: string[] = ['', '', '', '', '', '', '', '', ''];
   winPosition: number[] = [];
   messageStatus: string = 'Current turn: ' + this.playerNick[0];
+  date: string = '2021' + (currentYear > 2021 ? ` - ${currentYear}` : '');
+
   changeGameType(event: any) {
     const value = parseInt(event.target.value);
     this.currentPlayerTurn = 0;
