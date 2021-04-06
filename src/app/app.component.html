@@ -3,15 +3,15 @@
   <main>
     <h1>Tic Tac Toe</h1>
     <form (change)="changeGameType($event)">
-      <label><input type="radio" name="typeGame" value="1" />PvC</label>
       <label
         ><input
           type="radio"
           name="typeGame"
+          value="1"
           checked="true"
-          value="2"
-        />PvP</label
+        />PvC</label
       >
+      <label><input type="radio" name="typeGame" value="2" />PvP</label>
     </form>
     <div>
       <p>{{ playerNick[0] }}: {{ playerCountWins[0] }}</p>
@@ -52,7 +52,15 @@
         {{ messageStatus }}
       </p>
     </div>
-    <button (click)="newGame()" [disabled]="!countCurrentPlay">
+    <button
+      (click)="newGame()"
+      [disabled]="
+        !countCurrentPlay ||
+        (playerNick[currentPlayerTurn] === 'CPU' &&
+          !winPosition.length &&
+          countCurrentPlay < 9)
+      "
+    >
       {{ msgButtonStart }}
     </button>
   </main>

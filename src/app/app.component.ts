@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { element } from 'protractor';
 
 type Player1 = 'Player' | 'P1';
 type Player2 = 'CPU' | 'P2';
@@ -44,29 +45,34 @@ export class AppComponent {
     if (!this.winPosition.length) {
       const divId = parseInt(event.target.id.replace('field', ''));
       this.values[divId] = this.currentPlayerTurn === 0 ? 'X' : 'O';
-      this.currentPlayerTurn = this.currentPlayerTurn ? 0 : 1;
-      this.countCurrentPlay++;
-      if (this.countCurrentPlay === 9) {
-        this.msgButtonStart = 'NEW GAME';
-        this.messageStatus = 'Tie';
-      } else {
-        this.msgButtonStart = 'RESET';
-        this.messageStatus =
-          'Current turn: ' + this.playerNick[this.currentPlayerTurn];
-      }
-      victoryPositions.map((element) => {
-        const [pos1, pos2, pos3] = element;
-        if (
-          this.values[pos1] === this.values[pos2] &&
-          this.values[pos2] === this.values[pos3] &&
-          this.values[pos1]
-        ) {
-          this.winPosition = element;
-          this.setVictory();
-          return;
-        }
-      });
+      this.updateGame();
     }
+  }
+
+  updateGame() {
+    this.currentPlayerTurn = this.currentPlayerTurn ? 0 : 1;
+    this.countCurrentPlay++;
+    if (this.countCurrentPlay === 9) {
+      this.msgButtonStart = 'NEW GAME';
+      this.messageStatus = 'Tie';
+    } else {
+      this.msgButtonStart = 'RESET';
+      this.messageStatus =
+        'Current turn: ' + this.playerNick[this.currentPlayerTurn];
+    }
+    victoryPositions.map((element) => {
+      const [pos1, pos2, pos3] = element;
+      if (
+        this.values[pos1] === this.values[pos2] &&
+        this.values[pos2] === this.values[pos3] &&
+        this.values[pos1]
+      ) {
+        this.winPosition = element;
+        this.setVictory();
+        return;
+      }
+    });
+    this.botGameplay();
   }
 
   newGame() {
@@ -75,6 +81,7 @@ export class AppComponent {
     }
     this.msgButtonStart = 'RESET';
     this.reset();
+    this.botGameplay();
   }
 
   setVictory() {
@@ -92,5 +99,105 @@ export class AppComponent {
       'Current turn: ' + this.playerNick[this.currentPlayerTurn];
     this.countCurrentPlay = 0;
     this.winPosition = [];
+  }
+
+  botMove(pos: number) {
+    setTimeout(() => {
+      this.values[pos] = 'O';
+      this.updateGame();
+    }, 500);
+  }
+
+  chancesToWin(icon: 'X' | 'O'): { victoryIndex: number; total: number }[] {
+    const opponent = icon === 'X' ? 'O' : 'X';
+    const chances = victoryPositions
+      .map((vPos, index) => {
+        const arrayCountReturn = vPos
+          .map((v) => {
+            //Ignore full line if has O in line
+            if (this.values[v] === opponent) return -1;
+            //Ignore field if is empty
+            // if (this.values[v] !== icon) return 0;
+            //Count more 1 if is
+            if (this.values[v] === icon && vPos.includes(v)) return 1;
+            //else
+            return 0;
+          })
+          //Remove when empty
+          .filter((value) => {
+            return value !== 0;
+          });
+        //Ignore full line if has O
+        const count = arrayCountReturn.find((element) => {
+          return element === -1;
+        })
+          ? 0
+          : arrayCountReturn.length;
+        return { victoryIndex: index, total: count };
+      })
+      //Sort by higher chances
+      .sort((a, b) => b.total - a.total);
+    return chances.filter((element) => element.total === chances[0].total);
+  }
+
+  botGameplay() {
+    //If is the bot turn
+    if (
+      this.playerNick[this.currentPlayerTurn] === 'CPU' &&
+      this.countCurrentPlay < 9 &&
+      !this.winPosition.length
+    ) {
+      //Get a random number
+      function getRandomNumber(max: number) {
+        return Math.ceil(Math.random() * max) - 1;
+      }
+      //Get all emptyFields
+      const emptyFields: number[] = this.values
+        .map((element, index) => {
+          if (element === '') return index;
+          return -1;
+        })
+        .filter((index) => index !== -1);
+      //Last move
+      if (emptyFields.length === 1) {
+        this.botMove(emptyFields[0]);
+        return;
+      }
+      //If not the last move
+      //Get all X fields
+      const xPositions: number[] = this.values
+        .map((element, index) => {
+          if (element === 'X') return index;
+          return -1;
+        })
+        .filter((index) => index !== -1);
+      //Get the chances to X win
+      const xChances = this.chancesToWin('X');
+      const oChances = this.chancesToWin('O');
+      if (oChances[0].total === 2) {
+        const vPos = victoryPositions[oChances[0].victoryIndex];
+        const index = vPos.find((pos) => {
+          return this.values[pos] === '';
+        });
+        if (index) this.botMove(index);
+        return;
+      }
+      //Choose one of the victory's X chances
+      const xChanceIndex = getRandomNumber(xChances.length);
+      const xIndexVictoryChance = xChances[xChanceIndex].victoryIndex;
+      //Choosing one move to block the victory position choosed
+      //Selecting one possible move in the position choosed
+      const xPossibleMoves = victoryPositions[xIndexVictoryChance]
+        .map((element) => {
+          return { index: element, value: this.values[element] };
+        })
+        .filter((element) => element.value === '')
+        .map((element) => element.index);
+      //Index of the move choosed to set
+      const oPositionIndex =
+        xPossibleMoves[getRandomNumber(xPossibleMoves.length)];
+      //Set move
+      this.botMove(oPositionIndex);
+    }
   }
 }
