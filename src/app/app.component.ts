@@ -21,9 +21,6 @@ const currentYear = new Date().getFullYear();
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor() {
-    // console.log(props);
-  }
   playerCountWins: number[] = [0, 0];
   playerNick: [Player1, Player2] = ['Player', 'CPU'];
   currentPlayerTurn: number = 0;
