@@ -41,27 +41,29 @@ export class AppComponent {
   }
 
   whenClicked(event: any) {
-    const divId = parseInt(event.target.id.replace('field', ''));
-    this.values[divId] = this.currentPlayerTurn === 0 ? 'X' : 'O';
-    this.currentPlayerTurn = this.currentPlayerTurn ? 0 : 1;
-    this.countCurrentPlay++;
-    if (this.countCurrentPlay === 9) {
-      this.msgButtonStart = 'NEW GAME';
-    } else {
-      this.msgButtonStart = 'RESET';
-    }
-    victoryPositions.map((element) => {
-      const [pos1, pos2, pos3] = element;
-      if (
-        this.values[pos1] === this.values[pos2] &&
-        this.values[pos2] === this.values[pos3] &&
-        this.values[pos1]
-      ) {
-        this.winPosition = element;
-        this.setVictory();
-        return;
+    if (!this.winPosition.length) {
+      const divId = parseInt(event.target.id.replace('field', ''));
+      this.values[divId] = this.currentPlayerTurn === 0 ? 'X' : 'O';
+      this.currentPlayerTurn = this.currentPlayerTurn ? 0 : 1;
+      this.countCurrentPlay++;
+      if (this.countCurrentPlay === 9) {
+        this.msgButtonStart = 'NEW GAME';
+      } else {
+        this.msgButtonStart = 'RESET';
       }
-    });
+      victoryPositions.map((element) => {
+        const [pos1, pos2, pos3] = element;
+        if (
+          this.values[pos1] === this.values[pos2] &&
+          this.values[pos2] === this.values[pos3] &&
+          this.values[pos1]
+        ) {
+          this.winPosition = element;
+          this.setVictory();
+          return;
+        }
+      });
+    }
   }
 
   newGame() {
