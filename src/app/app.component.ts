@@ -38,6 +38,7 @@ export class AppComponent {
     this.playerCountWins[0] = 0;
     this.playerCountWins[1] = 0;
     this.playerNick = value == 1 ? ['Player', 'CPU'] : ['P1', 'P2'];
+    this.msgButtonStart = 'START';
     this.reset();
   }
 
