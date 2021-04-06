@@ -1,27 +1,16 @@
-# Tictactoe
+<h1 align="center">Tic Tac Toe</h1>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.7.
+<p>My first application with Angular</p>
+<p>Developed by me to a challenge at IGTI's frontend bootcamp using Angular and SCSS.</p>
+<p>Click here to play: <a href="https://matheusgarrido.github.io/tictactoe/">https://matheusgarrido.github.io/tictactoe/</a></p>
 
-## Development server
+<br/>
+<h3>How to Play</h3>
+<p><b>Moves:</b> Just click in a cell to set a move.</p>
+<p><b>Players:</b> The player 1 plays with 'X' and player 2 with 'O'.</p>
+<p><b>Victory:</b> Complete a vertical, horizontal or diagonal line made with 3 same icons to win a point.</p>
+<p><b>Replay:</b> Click in the button below the game to start a new game or restart the current.</p>
+<p><b>Game Modes:</b> Choose PxP to play with a friend or PxC to play alone against the computer.</p>
+<p><b>Score:</b> Challenge your friends to who win more points and beat them.</p>
+<p><b>Punishment:</b> If you restart the game without a tie or a winner, you will lose 1 point.</p>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
