@@ -172,12 +172,19 @@ export class AppComponent {
           return -1;
         })
         .filter((index) => index !== -1);
-      if (xPositions.length === 1 && [0, 2, 6, 8].includes(xPositions[0])) {
-        const countInputs = this.values.filter((element) => element !== '')
-          .length;
-        if (countInputs === 1) {
-          this.botMove(4);
+      if (xPositions.length === 1) {
+        if (xPositions[0] === 4) {
+          const nextPositions = [0, 2, 6, 8];
+          const index = getRandomNumber(4);
+          this.botMove(nextPositions[index]);
           return;
+        } else if ([0, 2, 6, 8].includes(xPositions[0])) {
+          const countInputs = this.values.filter((element) => element !== '')
+            .length;
+          if (countInputs === 1) {
+            this.botMove(4);
+            return;
+          }
         }
       } else if (
         xPositions.length === 2 &&
