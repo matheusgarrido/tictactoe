@@ -172,6 +172,34 @@ export class AppComponent {
           return -1;
         })
         .filter((index) => index !== -1);
+      if (xPositions.length === 1 && [0, 2, 6, 8].includes(xPositions[0])) {
+        const countInputs = this.values.filter((element) => element !== '')
+          .length;
+        if (countInputs === 1) {
+          this.botMove(4);
+          return;
+        }
+      } else if (
+        xPositions.length === 2 &&
+        [0, 2, 6, 8].includes(xPositions[0]) &&
+        [0, 2, 6, 8].includes(xPositions[1])
+      ) {
+        const countInputs = this.values.filter((element) => element !== '')
+          .length;
+        if (countInputs === 3) {
+          if (this.values[0] && this.values[0] === this.values[8]) {
+            const nextPositions = [1, 3];
+            const index = getRandomNumber(2);
+            this.botMove(nextPositions[index]);
+            return;
+          } else if (this.values[2] && this.values[2] === this.values[6]) {
+            const nextPositions = [5, 7];
+            const index = getRandomNumber(2);
+            this.botMove(nextPositions[index]);
+            return;
+          }
+        }
+      }
       //Get the chances to X win
       const xChances = this.chancesToWin('X');
       const oChances = this.chancesToWin('O');
